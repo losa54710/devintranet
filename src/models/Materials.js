@@ -1,27 +1,20 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class Materials extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+  const material = sequelize.define('Material',{
+    name: {
+      types: DataTypes.STRING,
+      allowNull: true
+    },
+    file: {
+      types: DataTypes.BLOB,
+      allowNull: true
     }
-  }
-  Materials.init({
-    name: DataTypes.STRING,
-    file: DataTypes.BLOB,
-    issueId: DataTypes.INTEGER,
-    unitId: DataTypes.INTEGER,
-    courseId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Materials',
+  },{
+    tableName: "materials"
   });
-  return Materials;
+  material.associate = function(models) {
+    material.belongToMany(models.Material,{ as: "materials" ,through: "issue_material", foreignkey: "issueId" });
+  };
+  return material;
 };

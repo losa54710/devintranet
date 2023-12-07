@@ -16,7 +16,12 @@ module.exports = {
         type: Sequelize.BLOB
       },
       issueId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "issues",
+          key: "issueId"
+        }
       },
       createdAt: {
         allowNull: false,

@@ -22,7 +22,12 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       unitId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "units",
+          key: "unitId"
+        }
       },
       createdAt: {
         allowNull: false,
