@@ -1,18 +1,18 @@
-const { Enroll } = require('../models/index');
+const { Rating } = require('../models/index');
 
 module.exports = {
 
-    createEnroll(req, res) {
+    createRating(req, res) {
 
-        const enroll = {
-            desc: req.body.desc,
-            studentId: req.body.studentId,
-            courseId: req.body.courseId,
-            periodId: req.body.periodId,
-            degreeId: req.body.degreeId
+        const rating = {
+            q1: req.body.q1,
+            q2: req.body.q2,
+            q3: req.body.q3,
+            average: req.body.average,
+            unitId: req.body.unitId
         };
 
-        Enroll.create(enroll)
+        Rating.create(rating)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -22,29 +22,29 @@ module.exports = {
             })
     },
 
-    updateEnroll(req, res) {
+    updateRating(req, res) {
 
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Rating.findAll({ where: { id: req.body.ratingId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.update({
-                            desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
-                            degreeId: req.body.degreeId
+                        Rating.update({
+                            q1: req.body.q1,
+                            q2: req.body.q2,
+                            q3: req.body.q3,
+                            average: req.body.average,
+                            unitId: req.body.unitId
                         },
                             {
-                                where: { id: req.body.enrollId }
+                                where: { id: req.body.ratingId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
-                            desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
-                            degreeId: req.body.degreeId
+                            q1: req.body.q1,
+                            q2: req.body.q2,
+                            q3: req.body.q3,
+                            average: req.body.average,
+                            unitId: req.body.unitId
                         })
                     } else {
                         res.status(500).json({ message: "actualizacion fallida" })
@@ -55,17 +55,17 @@ module.exports = {
         }
     },
 
-    deleteEnroll(req, res) {
+    deleteRating(req, res) {
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Rating.findAll({ where: { id: req.body.ratingId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.destroy({
+                        Rating.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.enrollId }
+                            where: { id: req.body.ratingId }
                         });
                         res.status(200).json({
-                            message: "estudiante eliminado"
+                            message: "curso eliminado"
                         })
                     } else {
                         res.status(500).json({ message: "eliminacion fallida" });

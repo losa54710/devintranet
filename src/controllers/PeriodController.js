@@ -1,18 +1,14 @@
-const { Enroll } = require('../models/index');
+const { Period } = require('../models/index');
 
 module.exports = {
 
-    createEnroll(req, res) {
+    createPeriod(req, res) {
 
-        const enroll = {
-            desc: req.body.desc,
-            studentId: req.body.studentId,
-            courseId: req.body.courseId,
-            periodId: req.body.periodId,
-            degreeId: req.body.degreeId
+        const period = {
+            year: req.body.year
         };
 
-        Enroll.create(enroll)
+        Period.create(period)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -22,29 +18,21 @@ module.exports = {
             })
     },
 
-    updateEnroll(req, res) {
+    updatePeriod(req, res) {
 
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Period.findAll({ where: { id: req.body.periodId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.update({
-                            desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
-                            degreeId: req.body.degreeId
+                        Period.update({
+                            year: req.body.year
                         },
                             {
-                                where: { id: req.body.enrollId }
+                                where: { id: req.body.periodId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
-                            desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
-                            degreeId: req.body.degreeId
+                            year: req.body.year
                         })
                     } else {
                         res.status(500).json({ message: "actualizacion fallida" })
@@ -55,17 +43,17 @@ module.exports = {
         }
     },
 
-    deleteEnroll(req, res) {
+    deletePeriod(req, res) {
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Period.findAll({ where: { id: req.body.periodId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.destroy({
+                        Period.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.enrollId }
+                            where: { id: req.body.periodId }
                         });
                         res.status(200).json({
-                            message: "estudiante eliminado"
+                            message: "curso eliminado"
                         })
                     } else {
                         res.status(500).json({ message: "eliminacion fallida" });

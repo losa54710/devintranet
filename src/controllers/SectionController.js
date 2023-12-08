@@ -1,18 +1,15 @@
-const { Enroll } = require('../models/index');
+const { Section } = require('../models/index');
 
 module.exports = {
 
-    createEnroll(req, res) {
+    createSection(req, res) {
 
-        const enroll = {
+        const section = {
             desc: req.body.desc,
-            studentId: req.body.studentId,
-            courseId: req.body.courseId,
-            periodId: req.body.periodId,
             degreeId: req.body.degreeId
         };
 
-        Enroll.create(enroll)
+        Section.create(section)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -22,28 +19,22 @@ module.exports = {
             })
     },
 
-    updateEnroll(req, res) {
+    updateSection(req, res) {
 
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Section.findAll({ where: { id: req.body.sectionId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.update({
+                        Section.update({
                             desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
                             degreeId: req.body.degreeId
                         },
                             {
-                                where: { id: req.body.enrollId }
+                                where: { id: req.body.sectionId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
                             desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
                             degreeId: req.body.degreeId
                         })
                     } else {
@@ -55,17 +46,17 @@ module.exports = {
         }
     },
 
-    deleteEnroll(req, res) {
+    deleteSection(req, res) {
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Section.findAll({ where: { id: req.body.sectionId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.destroy({
+                        Section.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.enrollId }
+                            where: { id: req.body.sectionId }
                         });
                         res.status(200).json({
-                            message: "estudiante eliminado"
+                            message: "curso eliminado"
                         })
                     } else {
                         res.status(500).json({ message: "eliminacion fallida" });

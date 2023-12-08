@@ -1,18 +1,16 @@
-const { Enroll } = require('../models/index');
+const { Material } = require('../models/index');
 
 module.exports = {
 
-    createEnroll(req, res) {
+    createMaterial(req, res) {
 
-        const enroll = {
-            desc: req.body.desc,
-            studentId: req.body.studentId,
-            courseId: req.body.courseId,
-            periodId: req.body.periodId,
-            degreeId: req.body.degreeId
+        const material = {
+            name: req.body.name,
+            file: req.body.file,
+            issueId: req.body.issueId
         };
 
-        Enroll.create(enroll)
+        Material.create(material)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -22,29 +20,25 @@ module.exports = {
             })
     },
 
-    updateEnroll(req, res) {
+    updateMaterial(req, res) {
 
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Material.findAll({ where: { id: req.body.materialId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.update({
-                            desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
-                            degreeId: req.body.degreeId
+                        Material.update({
+                            name: req.body.name,
+                            file: req.body.file,
+                            issueId: req.body.issueId
                         },
                             {
-                                where: { id: req.body.enrollId }
+                                where: { id: req.body.materialId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
-                            desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
-                            degreeId: req.body.degreeId
+                            name: req.body.name,
+                            file: req.body.file,
+                            issueId: req.body.issueId
                         })
                     } else {
                         res.status(500).json({ message: "actualizacion fallida" })
@@ -55,17 +49,17 @@ module.exports = {
         }
     },
 
-    deleteEnroll(req, res) {
+    deleteMaterial(req, res) {
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Material.findAll({ where: { id: req.body.materialId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.destroy({
+                        Material.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.enrollId }
+                            where: { id: req.body.materialId }
                         });
                         res.status(200).json({
-                            message: "estudiante eliminado"
+                            message: "curso eliminado"
                         })
                     } else {
                         res.status(500).json({ message: "eliminacion fallida" });
