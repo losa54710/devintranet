@@ -5,11 +5,9 @@ const authConfig = require('../../config/auth');
 
 module.exports = {
 
-    signIn(req, res) {
+    async signIn(req, res) {
         let { email, pwd } = req.body;
-
-        // Buscar usuario
-        User.findOne({
+        await User.findOne({
             where: {
                 email: email
             }
@@ -32,8 +30,6 @@ module.exports = {
                     })
 
                 } else {
-
-                    // Unauthorized Access
                     res.status(401).json({ msg: "Contraseña incorrecta" })
                 }
 
@@ -44,12 +40,12 @@ module.exports = {
         })
     },
 
-    signUp(req, res) {
+    async signUp(req, res) {
         //console.log(req.body.pwd);
         let password = bcrypt.hashSync(req.body.pwd, Number.parseInt(authConfig.rounds));
         //console.log(password);
 
-        User.create({
+        await User.create({
             name: req.body.name,
             email: req.body.email,
             pwd: password

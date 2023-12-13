@@ -2,7 +2,20 @@ const { Material } = require('../models/index');
 
 module.exports = {
 
-    createMaterial(req, res) {
+    async getMaterials(req, res) {
+        try {
+            const materials = await Material.findAll();
+            if (materials.length > 0) {
+                res.status(200).json({ data: materials });
+            } else {
+                res.status(200).json({ data: [] });
+            }
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    },
+
+    async createMaterial(req, res) {
 
         const material = {
             name: req.body.name,
@@ -10,7 +23,7 @@ module.exports = {
             issueId: req.body.issueId
         };
 
-        Material.create(material)
+        await Material.create(material)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -20,13 +33,13 @@ module.exports = {
             })
     },
 
-    updateMaterial(req, res) {
+    async updateMaterial(req, res) {
 
         try {
             Material.findAll({ where: { id: req.body.materialId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Material.update({
+                        await Material.update({
                             name: req.body.name,
                             file: req.body.file,
                             issueId: req.body.issueId
@@ -49,12 +62,12 @@ module.exports = {
         }
     },
 
-    deleteMaterial(req, res) {
+    async deleteMaterial(req, res) {
         try {
             Material.findAll({ where: { id: req.body.materialId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Material.destroy({
+                        await Material.destroy({
                             message: "eliminacion correcta",
                             where: { id: req.body.materialId }
                         });

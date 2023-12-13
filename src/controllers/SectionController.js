@@ -2,14 +2,27 @@ const { Section } = require('../models/index');
 
 module.exports = {
 
-    createSection(req, res) {
+    async getSections(req, res) {
+        try {
+            const sections = await Section.findAll();
+            if (sections.length > 0) {
+                res.status(200).json({ data: sections });
+            } else {
+                res.status(200).json({ data: [] });
+            }
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    },
+
+    async createSection(req, res) {
 
         const section = {
             desc: req.body.desc,
             degreeId: req.body.degreeId
         };
 
-        Section.create(section)
+        await Section.create(section)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -19,13 +32,13 @@ module.exports = {
             })
     },
 
-    updateSection(req, res) {
+    async updateSection(req, res) {
 
         try {
             Section.findAll({ where: { id: req.body.sectionId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Section.update({
+                        await Section.update({
                             desc: req.body.desc,
                             degreeId: req.body.degreeId
                         },
@@ -46,12 +59,12 @@ module.exports = {
         }
     },
 
-    deleteSection(req, res) {
+    async deleteSection(req, res) {
         try {
             Section.findAll({ where: { id: req.body.sectionId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Section.destroy({
+                        await Section.destroy({
                             message: "eliminacion correcta",
                             where: { id: req.body.sectionId }
                         });

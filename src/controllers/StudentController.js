@@ -2,7 +2,20 @@ const { Student } = require('../models/index');
 
 module.exports = {
 
-    createStudent(req, res) {
+    async getStudents(req, res) {
+        try {
+            const students = await Student.findAll();
+            if (students.length > 0) {
+                res.status(200).json({ data: students });
+            } else {
+                res.status(200).json({ data: [] });
+            }
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    },
+
+    async createStudent(req, res) {
 
         const student = {
             name: req.body.name,
@@ -10,7 +23,7 @@ module.exports = {
             datebirth: req.body.datebirth
         };
 
-        Student.create(student)
+        await Student.create(student)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -20,13 +33,13 @@ module.exports = {
             })
     },
 
-    updateStudent(req, res) {
+    async updateStudent(req, res) {
 
         try {
             Student.findAll({ where: { id: req.body.studentId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Student.update({
+                        await Student.update({
                             name: req.body.name,
                             dni: req.body.dni,
                             datebirth: req.body.datebirth
@@ -49,12 +62,12 @@ module.exports = {
         }
     },
 
-    deleteStudent(req, res) {
+    async deleteStudent(req, res) {
         try {
             Student.findAll({ where: { id: req.body.studentId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Student.destroy({
+                        await Student.destroy({
                             message: "eliminacion correcta",
                             where: { id: req.body.studentId }
                         });

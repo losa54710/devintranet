@@ -2,14 +2,27 @@ const { Issue } = require('../models/index');
 
 module.exports = {
 
-    createIssue(req, res) {
+    async getIssues(req, res) {
+        try {
+            const issues = await Issue.findAll();
+            if (issues.length > 0) {
+                res.status(200).json({ data: issues });
+            } else {
+                res.status(200).json({ data: [] });
+            }
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    },
+
+    async createIssue(req, res) {
 
         const issue = {
             desc: req.body.desc,
             unitId: req.body.unitId
         };
 
-        Issue.create(issue)
+        await Issue.create(issue)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -19,13 +32,13 @@ module.exports = {
             })
     },
 
-    updateIssue(req, res) {
+    async updateIssue(req, res) {
 
         try {
             Issue.findAll({ where: { id: req.body.issueId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Issue.update({
+                       await Issue.update({
                             desc: req.body.desc,
                             unitId: req.body.unitId
                         },
@@ -46,12 +59,12 @@ module.exports = {
         }
     },
 
-    deleteIssue(req, res) {
+    async deleteIssue(req, res) {
         try {
             Issue.findAll({ where: { id: req.body.issueId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Issue.destroy({
+                        await Issue.destroy({
                             message: "eliminacion correcta",
                             where: { id: req.body.issueId }
                         });

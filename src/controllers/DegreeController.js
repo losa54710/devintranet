@@ -1,14 +1,27 @@
 const { Degree } = require('../models/index');
 
 module.exports = {
+    
+    async getDegrees(req, res) {
+        try {
+            const degrees = await Degree.findAll();
+            if (degrees.length > 0) {
+                res.status(200).json({ data: degrees });
+            } else {
+                res.status(200).json({ data: [] });
+            }
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    },
 
-    createDegree(req,res){
+    async createDegree(req,res){
 
         const degree = {
             desc:req.body.desc
         };
 
-        Degree.create(degree)
+        await Degree.create(degree)
         .then(data => {
             res.send(data);
         }).catch(err => {
@@ -18,13 +31,13 @@ module.exports = {
         })
     },
 
-    updateDegree(req, res){
+    async updateDegree(req, res){
 
         try{
             Degree.findAll({ where: { id: req.body.degreeId }})
             .then(async (result) => {
                 if( result.length > 0){
-                    Degree.update({
+                    await Degree.update({
                         desc: req.body.desc
                     },
                     {
@@ -43,12 +56,12 @@ module.exports = {
         }
     },
 
-    deleteDegree(req,res){
+    async deleteDegree(req,res){
         try{
             Degree.findAll({ where: { id: req.body.degreeId }})
             .then(async (result) => {
                 if( result.length > 0){
-                    Degree.destroy({
+                    await Degree.destroy({
                         message: "eliminacion correcta",
                         where: { id: req.body.degreeId }
                     });

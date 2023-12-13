@@ -2,13 +2,26 @@ const { Period } = require('../models/index');
 
 module.exports = {
 
-    createPeriod(req, res) {
+    async getPeriods(req, res) {
+        try {
+            const periods = await Period.findAll();
+            if (periods.length > 0) {
+                res.status(200).json({ data: periods });
+            } else {
+                res.status(200).json({ data: [] });
+            }
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    },
+
+    async createPeriod(req, res) {
 
         const period = {
             year: req.body.year
         };
 
-        Period.create(period)
+        await Period.create(period)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -18,13 +31,13 @@ module.exports = {
             })
     },
 
-    updatePeriod(req, res) {
+    async updatePeriod(req, res) {
 
         try {
             Period.findAll({ where: { id: req.body.periodId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Period.update({
+                        await Period.update({
                             year: req.body.year
                         },
                             {
@@ -43,12 +56,12 @@ module.exports = {
         }
     },
 
-    deletePeriod(req, res) {
+    async deletePeriod(req, res) {
         try {
             Period.findAll({ where: { id: req.body.periodId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Period.destroy({
+                        await Period.destroy({
                             message: "eliminacion correcta",
                             where: { id: req.body.periodId }
                         });

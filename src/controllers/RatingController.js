@@ -2,7 +2,20 @@ const { Rating } = require('../models/index');
 
 module.exports = {
 
-    createRating(req, res) {
+    async getRatings(req, res) {
+        try {
+            const ratings = await Rating.findAll();
+            if (ratings.length > 0) {
+                res.status(200).json({ data: ratings });
+            } else {
+                res.status(200).json({ data: [] });
+            }
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    },
+
+    async createRating(req, res) {
 
         const rating = {
             q1: req.body.q1,
@@ -12,7 +25,7 @@ module.exports = {
             unitId: req.body.unitId
         };
 
-        Rating.create(rating)
+        await Rating.create(rating)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -22,13 +35,13 @@ module.exports = {
             })
     },
 
-    updateRating(req, res) {
+   async updateRating(req, res) {
 
         try {
             Rating.findAll({ where: { id: req.body.ratingId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Rating.update({
+                        await Rating.update({
                             q1: req.body.q1,
                             q2: req.body.q2,
                             q3: req.body.q3,
@@ -55,12 +68,12 @@ module.exports = {
         }
     },
 
-    deleteRating(req, res) {
+    async deleteRating(req, res) {
         try {
             Rating.findAll({ where: { id: req.body.ratingId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Rating.destroy({
+                        await Rating.destroy({
                             message: "eliminacion correcta",
                             where: { id: req.body.ratingId }
                         });

@@ -2,7 +2,20 @@ const { Enroll } = require('../models/index');
 
 module.exports = {
 
-    createEnroll(req, res) {
+    async getEnrolls(req, res) {
+        try {
+            const enrolls = await Enroll.findAll();
+            if (enrolls.length > 0) {
+                res.status(200).json({ data: enrolls });
+            } else {
+                res.status(200).json({ data: [] });
+            }
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    },
+
+    async createEnroll(req, res) {
 
         const enroll = {
             desc: req.body.desc,
@@ -12,7 +25,7 @@ module.exports = {
             degreeId: req.body.degreeId
         };
 
-        Enroll.create(enroll)
+        await Enroll.create(enroll)
             .then(data => {
                 res.send(data);
             }).catch(err => {
@@ -22,13 +35,13 @@ module.exports = {
             })
     },
 
-    updateEnroll(req, res) {
+    async updateEnroll(req, res) {
 
         try {
             Enroll.findAll({ where: { id: req.body.enrollId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.update({
+                       await Enroll.update({
                             desc: req.body.desc,
                             studentId: req.body.studentId,
                             courseId: req.body.courseId,
@@ -55,12 +68,12 @@ module.exports = {
         }
     },
 
-    deleteEnroll(req, res) {
+    async deleteEnroll(req, res) {
         try {
             Enroll.findAll({ where: { id: req.body.enrollId } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                        Enroll.destroy({
+                        await Enroll.destroy({
                             message: "eliminacion correcta",
                             where: { id: req.body.enrollId }
                         });
