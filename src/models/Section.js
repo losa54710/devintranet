@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   const section = sequelize.define('Section', {
     desc: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     }
   },{
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   section.associate = function(models){
-    section.belongToMany(models.Degree, {as:"degrees" , through:"section_degree", foreignkey:"degreeId"});
+    section.belongsToMany(models.Degree, {as:"degrees" , through:"section_degree", foreignkey:"degreeId"});
   };
 
   return section;

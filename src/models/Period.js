@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   const period = sequelize.define('Period',{
     year: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     }
   },{

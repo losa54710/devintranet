@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   },{
     tableName: "students"
   });
-  user.associate = function(models) {
+  student.associate = function(models) {
 
   };
   return student;

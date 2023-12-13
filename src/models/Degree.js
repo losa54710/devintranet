@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   
   const degree = sequelize.define('Degree',{
     desc: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true
     }
   },{

@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     tableName: "enrolls"
   });
   enroll.associate = function (models) {
-    enroll.belongToMany(models.Student, { as: "students", through: "enroll_student", foreignkey: "studentId" });
-    enroll.belongToMany(models.Course, { as: "courses", through: "enroll_courses", foreignkey: "courseId" });
-    enroll.belongToMany(models.Degree, { as: "degrees", through: "enroll_degrees", foreignkey: "degreeId" });
-    enroll.belongToMany(models.Period, { as: "periods", through: "enroll_period", foreignkey: "periodId" });
+    enroll.belongsToMany(models.Student, { as: "students", through: "enroll_student", foreignkey: "studentId" });
+    enroll.belongsToMany(models.Course, { as: "courses", through: "enroll_courses", foreignkey: "courseId" });
+    enroll.belongsToMany(models.Degree, { as: "degrees", through: "enroll_degrees", foreignkey: "degreeId" });
+    enroll.belongsToMany(models.Period, { as: "periods", through: "enroll_period", foreignkey: "periodId" });
   };
   return enroll;
 };

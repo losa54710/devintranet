@@ -3,14 +3,14 @@
 module.exports = (sequelize, DataTypes) => {
   const unit = sequelize.define('Unit',{
     name: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true
     }
   },{
     tableName: "units"
   });
   unit.associate = function(models) {
-    unit.belongToMany(models.Course,{ as: "courses" ,through: "unit_course", foreignkey: "courseId" });
+    unit.belongsToMany(models.Course,{ as: "courses" ,through: "unit_course", foreignkey: "courseId" });
   };
   
   
