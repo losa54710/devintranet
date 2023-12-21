@@ -38,7 +38,7 @@ module.exports = {
     async updateEnroll(req, res) {
 
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Enroll.findAll({ where: { enrollId: req.body.enrollId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                        await Enroll.update({
@@ -49,7 +49,7 @@ module.exports = {
                             degreeId: req.body.degreeId
                         },
                             {
-                                where: { id: req.body.enrollId }
+                                where: { enrollId: req.body.enrollId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
@@ -70,12 +70,12 @@ module.exports = {
 
     async deleteEnroll(req, res) {
         try {
-            Enroll.findAll({ where: { id: req.body.enrollId } })
+            Enroll.findAll({ where: { enrollId: req.body.enrollId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Enroll.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.enrollId }
+                            where: { enrollId: req.body.enrollId }
                         });
                         res.status(200).json({
                             message: "estudiante eliminado"

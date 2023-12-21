@@ -2,6 +2,12 @@
 
 module.exports = (sequelize, DataTypes) => {
   const material = sequelize.define('Material',{
+    materialId: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: true

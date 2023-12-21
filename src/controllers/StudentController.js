@@ -20,7 +20,8 @@ module.exports = {
         const student = {
             name: req.body.name,
             dni: req.body.dni,
-            datebirth: req.body.datebirth
+            datebirth: req.body.datebirth,
+            gender: req.body.gender
         };
 
         await Student.create(student)
@@ -36,7 +37,7 @@ module.exports = {
     async updateStudent(req, res) {
 
         try {
-            Student.findAll({ where: { id: req.body.studentId } })
+            Student.findAll({ where: { studentId: req.body.studentId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Student.update({
@@ -45,7 +46,7 @@ module.exports = {
                             datebirth: req.body.datebirth
                         },
                             {
-                                where: { id: req.body.studentId }
+                                where: { studentId: req.body.studentId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
@@ -64,12 +65,12 @@ module.exports = {
 
     async deleteStudent(req, res) {
         try {
-            Student.findAll({ where: { id: req.body.studentId } })
+            Student.findAll({ where: { studentId: req.body.studentId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Student.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.studentId }
+                            where: { studentId: req.body.studentId }
                         });
                         res.status(200).json({
                             message: "estudiante eliminado"

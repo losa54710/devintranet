@@ -35,7 +35,7 @@ module.exports = {
     async updateSection(req, res) {
 
         try {
-            Section.findAll({ where: { id: req.body.sectionId } })
+            Section.findAll({ where: { sectionId: req.body.sectionId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Section.update({
@@ -43,7 +43,7 @@ module.exports = {
                             degreeId: req.body.degreeId
                         },
                             {
-                                where: { id: req.body.sectionId }
+                                where: { sectionId: req.body.sectionId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
@@ -61,12 +61,12 @@ module.exports = {
 
     async deleteSection(req, res) {
         try {
-            Section.findAll({ where: { id: req.body.sectionId } })
+            Section.findAll({ where: { sectionId: req.body.sectionId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Section.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.sectionId }
+                            where: { sectionId: req.body.sectionId }
                         });
                         res.status(200).json({
                             message: "curso eliminado"

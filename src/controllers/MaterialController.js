@@ -36,7 +36,7 @@ module.exports = {
     async updateMaterial(req, res) {
 
         try {
-            Material.findAll({ where: { id: req.body.materialId } })
+            Material.findAll({ where: { materialId: req.body.materialId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Material.update({
@@ -45,7 +45,7 @@ module.exports = {
                             issueId: req.body.issueId
                         },
                             {
-                                where: { id: req.body.materialId }
+                                where: { idmaterialId: req.body.materialId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
@@ -64,12 +64,12 @@ module.exports = {
 
     async deleteMaterial(req, res) {
         try {
-            Material.findAll({ where: { id: req.body.materialId } })
+            Material.findAll({ where: { materialId: req.body.materialId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Material.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.materialId }
+                            where: { materialId: req.body.materialId }
                         });
                         res.status(200).json({
                             message: "curso eliminado"

@@ -34,14 +34,14 @@ module.exports = {
     async updateDegree(req, res){
 
         try{
-            Degree.findAll({ where: { id: req.body.degreeId }})
+            Degree.findAll({ where: { degreeId: req.body.degreeId }})
             .then(async (result) => {
                 if( result.length > 0){
                     await Degree.update({
                         desc: req.body.desc
                     },
                     {
-                        where: { id: req.body.degreeId }
+                        where: { degreeId: req.body.degreeId }
                     });
                     res.status(200).json({
                         message: "actualizacion correcta",
@@ -58,12 +58,12 @@ module.exports = {
 
     async deleteDegree(req,res){
         try{
-            Degree.findAll({ where: { id: req.body.degreeId }})
+            Degree.findAll({ where: { degreeId: req.body.degreeId }})
             .then(async (result) => {
                 if( result.length > 0){
                     await Degree.destroy({
                         message: "eliminacion correcta",
-                        where: { id: req.body.degreeId }
+                        where: { degreeId: req.body.degreeId }
                     });
                     res.status(200).json({
                         message: "curso eliminado"

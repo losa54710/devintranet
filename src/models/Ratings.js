@@ -2,6 +2,12 @@
 
 module.exports = (sequelize, DataTypes) => {
   const rating = sequelize.define('Rating',{
+    ratingId: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     q1: {
       type: DataTypes.FLOAT,
       allowNull: true

@@ -33,14 +33,14 @@ ctrl.createCourse = async function (req, res) {
     ctrl.updateCourse = async function (req, res) {
 
         try {
-            Course.findAll({ where: { id: req.body.courseId } })
+            Course.findAll({ where: { courseId: req.body.courseId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Course.update({
                             name: req.body.name
                         },
                             {
-                                where: { id: req.body.courseId }
+                                where: { courseId: req.body.courseId }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
@@ -57,12 +57,12 @@ ctrl.createCourse = async function (req, res) {
 
     ctrl.deleteCourse = async function (req, res) {
         try {
-            Course.findAll({ where: { id: req.body.courseId } })
+            Course.findAll({ where: { courseId: req.body.courseId } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Course.destroy({
                             message: "eliminacion correcta",
-                            where: { id: req.body.courseId }
+                            where: { courseId: req.body.courseId }
                         });
                         res.status(200).json({
                             message: "curso eliminado"
