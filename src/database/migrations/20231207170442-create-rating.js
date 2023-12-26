@@ -2,8 +2,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Ratings', {
-      ratingId: {
+    await queryInterface.createTable('ratings', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -21,12 +21,12 @@ module.exports = {
       average: {
         type: Sequelize.FLOAT
       },
-      unitId: {
+      unitsId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "units",
-          key: "unitId"
+          key: "id"
         }
       },
       createdAt: {
@@ -40,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Ratings');
+    await queryInterface.dropTable('ratings');
   }
 };

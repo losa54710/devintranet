@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('units', {
-      unitId: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -11,6 +11,14 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING
+      },
+      coursesId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "courses",
+          key: "id"
+        }
       },
       createdAt: {
         allowNull: false,

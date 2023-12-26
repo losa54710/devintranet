@@ -38,7 +38,7 @@ module.exports = {
    async updateRating(req, res) {
 
         try {
-            Rating.findAll({ where: { ratingId: req.body.ratingId } })
+            Rating.findAll({ where: { id: req.body.id } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Rating.update({
@@ -49,7 +49,7 @@ module.exports = {
                             unitId: req.body.unitId
                         },
                             {
-                                where: { ratingId: req.body.ratingId }
+                                where: { id: req.body.id }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
@@ -70,12 +70,12 @@ module.exports = {
 
     async deleteRating(req, res) {
         try {
-            Rating.findAll({ where: { ratingId: req.body.ratingId } })
+            Rating.findAll({ where: { id: req.body.id } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Rating.destroy({
                             message: "eliminacion correcta",
-                            where: { ratingId: req.body.ratingId }
+                            where: { id: req.body.id }
                         });
                         res.status(200).json({
                             message: "curso eliminado"

@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('enrolls', {
-      enrollId: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -12,36 +12,36 @@ module.exports = {
       desc: {
         type: Sequelize.STRING
       },
-      studentId: {
+      studentsId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "students",
-          key: "studentId"
+          key: 'id'
         }
       },
-      courseId:{
+      coursesId:{
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "courses",
-          key: "courseId"
+          key: "id"
         }
       },
-      periodId:{
+      periodsId:{
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "periods",
-          key: "periodId"
+          key: "id"
         }
       },
-      degreeId:{
+      degreesId:{
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "degrees",
-          key: "degreeId"
+          key: "id"
         }
       },
       createdAt: {

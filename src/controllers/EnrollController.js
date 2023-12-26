@@ -1,10 +1,30 @@
-const { Enroll } = require('../models/index');
+const { where } = require('sequelize');
+const { Enroll, Student, Course, Degree, Period } = require('../models/index');
 
 module.exports = {
 
     async getEnrolls(req, res) {
         try {
-            const enrolls = await Enroll.findAll();
+            const enrolls = await Enroll.findAll({
+                include: [
+                    {
+                        model: Student,
+                        as: 'students'
+                    },
+                    {
+                        model: Course,
+                        as: 'courses'
+                    },
+                    {
+                        model: Degree,
+                        as: 'degrees'
+                    },
+                    {
+                        model: Period,
+                        as: 'periods'
+                    },
+                ]
+            });
             if (enrolls.length > 0) {
                 res.status(200).json({ data: enrolls });
             } else {
@@ -19,10 +39,10 @@ module.exports = {
 
         const enroll = {
             desc: req.body.desc,
-            studentId: req.body.studentId,
-            courseId: req.body.courseId,
-            periodId: req.body.periodId,
-            degreeId: req.body.degreeId
+            studentsId: req.body.studentsId,
+            coursesId: req.body.coursesId,
+            periodsId: req.body.periodsId,
+            degreesId: req.body.degreesId
         };
 
         await Enroll.create(enroll)
@@ -38,26 +58,26 @@ module.exports = {
     async updateEnroll(req, res) {
 
         try {
-            Enroll.findAll({ where: { enrollId: req.body.enrollId } })
+            Enroll.findAll({ where: { id: req.body.id } })
                 .then(async (result) => {
                     if (result.length > 0) {
-                       await Enroll.update({
+                        await Enroll.update({
                             desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
-                            degreeId: req.body.degreeId
+                            studentsId: req.body.studentsId,
+                            coursesId: req.body.coursesId,
+                            periodsId: req.body.periodsId,
+                            degreesId: req.body.degreesId
                         },
                             {
-                                where: { enrollId: req.body.enrollId }
+                                where: { id: req.body.id }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
                             desc: req.body.desc,
-                            studentId: req.body.studentId,
-                            courseId: req.body.courseId,
-                            periodId: req.body.periodId,
-                            degreeId: req.body.degreeId
+                            studentsId: req.body.studentsId,
+                            coursesId: req.body.coursesId,
+                            periodsId: req.body.periodsId,
+                            degreesId: req.body.degreesId
                         })
                     } else {
                         res.status(500).json({ message: "actualizacion fallida" })
@@ -70,12 +90,12 @@ module.exports = {
 
     async deleteEnroll(req, res) {
         try {
-            Enroll.findAll({ where: { enrollId: req.body.enrollId } })
+            Enroll.findAll({ where: { id: req.body.id } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Enroll.destroy({
                             message: "eliminacion correcta",
-                            where: { enrollId: req.body.enrollId }
+                            where: { id: req.body.id }
                         });
                         res.status(200).json({
                             message: "estudiante eliminado"

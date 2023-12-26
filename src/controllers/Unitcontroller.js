@@ -35,7 +35,7 @@ module.exports = {
     async updateUnit(req, res) {
 
         try {
-            Unit.findAll({ where: { unitId: req.body.unitId } })
+            Unit.findAll({ where: { id: req.body.id } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Unit.update({
@@ -43,7 +43,7 @@ module.exports = {
                             courseId: req.body.courseId
                         },
                             {
-                                where: { unitId: req.body.unitId }
+                                where: { id: req.body.id }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
@@ -61,12 +61,12 @@ module.exports = {
 
     async deleteUnit(req, res) {
         try {
-            Unit.findAll({ where: { unitId: req.body.unitId } })
+            Unit.findAll({ where: { id: req.body.id } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Unit.destroy({
                             message: "eliminacion correcta",
-                            where: { unitId: req.body.unitId }
+                            where: { id: req.body.id }
                         });
                         res.status(200).json({
                             message: "curso eliminado"

@@ -34,14 +34,14 @@ module.exports = {
     async updatePeriod(req, res) {
 
         try {
-            Period.findAll({ where: { periodId: req.body.periodId } })
+            Period.findAll({ where: { id: req.body.id } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Period.update({
                             year: req.body.year
                         },
                             {
-                                where: { periodId: req.body.periodId }
+                                where: { id: req.body.id }
                             });
                         res.status(200).json({
                             message: "actualizacion correcta",
@@ -58,12 +58,12 @@ module.exports = {
 
     async deletePeriod(req, res) {
         try {
-            Period.findAll({ where: { iperiodIdd: req.body.periodId } })
+            Period.findAll({ where: { iperiodIdd: req.body.id } })
                 .then(async (result) => {
                     if (result.length > 0) {
                         await Period.destroy({
                             message: "eliminacion correcta",
-                            where: { periodId: req.body.periodId }
+                            where: { id: req.body.id }
                         });
                         res.status(200).json({
                             message: "curso eliminado"

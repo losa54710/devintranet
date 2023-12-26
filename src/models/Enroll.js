@@ -2,12 +2,6 @@
 
 module.exports = (sequelize, DataTypes) => {
   const enroll = sequelize.define('Enroll', {
-    enrollId: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
     desc: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     tableName: "enrolls"
   });
   enroll.associate = function (models) {
-    enroll.belongsToMany(models.Student, { as: "students", through: "enroll_student", foreignkey: "studentId" });
-    enroll.belongsToMany(models.Course, { as: "courses", through: "enroll_courses", foreignkey: "courseId" });
-    enroll.belongsToMany(models.Degree, { as: "degrees", through: "enroll_degrees", foreignkey: "degreeId" });
-    enroll.belongsToMany(models.Period, { as: "periods", through: "enroll_period", foreignkey: "periodId" });
+    enroll.belongsTo(models.Student, { foreignkey: 'id', as: 'students' });
+    enroll.belongsTo(models.Course, { foreignkey: "id", as: "courses", });
+    enroll.belongsTo(models.Degree, { foreignkey: "id", as: "degrees" });
+    enroll.belongsTo(models.Period, { foreignkey: "id",as: "periods" });
   };
   return enroll;
 };

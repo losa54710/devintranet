@@ -2,8 +2,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Materials', {
-      materialId: {
+    await queryInterface.createTable('materials', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -15,12 +15,12 @@ module.exports = {
       file: {
         type: Sequelize.BLOB
       },
-      issueId: {
+      issuesId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "issues",
-          key: "issueId"
+          key: "id"
         }
       },
       createdAt: {
@@ -34,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Materials');
+    await queryInterface.dropTable('materials');
   }
 };

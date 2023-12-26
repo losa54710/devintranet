@@ -2,12 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const student = sequelize.define('Student',{
-    studentId: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
+
     name:{
       type: DataTypes.STRING,
       allowNull: false,
